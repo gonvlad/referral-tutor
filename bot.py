@@ -4,15 +4,19 @@ from telebot import types
 import logging
 from flask import Flask, request
 from text_templates import START_TEXT
+from text_templates import MANAGER_NOTIFICATION_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_DATA
 from text_templates import LINK_BUTTON_TEXT
 from text_templates import LINK_BUTTON_DATA
+from text_templates import SUBMIT_TASK_BUTTON_TEXT
+from text_templates import SUBMIT_TASK_BUTTON_DATA
 from text_templates import CREDENTIALS
 
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 APP_URL = os.environ['APP_URL']
+MANAGER_TELEGRAM_ID = os.environ['MANAGER_TELEGRAM_ID']
 
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -43,7 +47,16 @@ def handle_accept(call):
     if str(call.data) == ACCEPT_TASK_BUTTON_DATA:
         login = "petrovich@gmail.com"
         password = "12345678"
-        bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password))
+        
+        markup = types.InlineKeyboardMarkup()
+        submit_task_btn = types.InlineKeyboardButton(SUBMIT_TASK_BUTTON_TEXT, callback_data=SUBMIT_TASK_BUTTON_DATA)
+
+        markup.row(submit_task_btn)
+        
+        bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
+    if str(call.data) == SUBMIT_TASK_BUTTON_DATA:
+        username = call.message.from_user.first_name
+        bot.send_message(MANAGER_TELEGRAM_ID, MANAGER_NOTIFICATION_TEXT.format(username=username))
     bot.answer_callback_query(call.id)
 
 
