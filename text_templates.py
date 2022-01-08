@@ -1,7 +1,7 @@
 # Static texts
 START_TEXT = "Рад, что Вы с нами.\n\nКажется у меня для вас есть первое задание."
-HR_MANAGER_NOTIFICATION_TEXT = "Пользователь {username} подтвердил выполнение задания."
-TECH_MANAGER_NOTIFICATION_TEXT = "Пользователь {username} подтвердил выполнение задания. В пуле доступно {number_of_credentials} пар реквизитов для входа."
+HR_MANAGER_NOTIFICATION_TEXT = "Пользователь @{username} подтвердил выполнение задания."
+TECH_MANAGER_NOTIFICATION_TEXT = "Пользователь @{username} подтвердил выполнение задания. В пуле доступно {number_of_credentials} пар реквизитов для входа."
 
 # Button texts
 ACCEPT_TASK_BUTTON_TEXT = "Хочу приступить"
