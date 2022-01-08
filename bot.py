@@ -6,6 +6,8 @@ from flask import Flask, request
 from text_templates import START_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_DATA
+from text_templates import LINK_BUTTON_TEXT
+from text_templates import LINK_BUTTON_DATA
 from text_templates import CREDENTIALS
 
 
