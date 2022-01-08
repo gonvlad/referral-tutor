@@ -21,11 +21,15 @@ logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\- Верифицировать аккаунт\n\nПодробнее смотрите в [инструкции]({instruction_link}) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
-    text = task["Text"].format(instruction_link=task["Instruction_link"])
+    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\- Верифицировать аккаунт\n\nПодробнее смотрите в инструкции ⬇️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
+    text = task["Text"]
+    instruction_link = task["Instruction_link"]
     
     markup = types.InlineKeyboardMarkup()
-    accept_task_btn = types.InlineKeyboardButton(ACCEPT_TASK_BUTTON_TEXT, callback_data=ACCEPT_TASK_BUTTON_DATA)
+    accept_task_btn = types.InlineKeyboardButton(ACCEPT_TASK_BUTTON_TEXT, url=instruction_link, callback_data=ACCEPT_TASK_BUTTON_DATA)
+    link_btn = types.InlineKeyboardButton(LINK_BUTTON_TEXT, callback_data=LINK_BUTTON_DATA)
+    
+    markup.row(link_btn)
     markup.row(accept_task_btn)
     
     bot.send_message(message.chat.id, START_TEXT)
