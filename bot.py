@@ -4,7 +4,8 @@ from telebot import types
 import logging
 from flask import Flask, request
 from text_templates import START_TEXT
-from text_templates import MANAGER_NOTIFICATION_TEXT
+from text_templates import HR_MANAGER_NOTIFICATION_TEXT
+from text_templates import TECH_MANAGER_NOTIFICATION_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_DATA
 from text_templates import LINK_BUTTON_TEXT
@@ -12,12 +13,14 @@ from text_templates import LINK_BUTTON_DATA
 from text_templates import SUBMIT_TASK_BUTTON_TEXT
 from text_templates import SUBMIT_TASK_BUTTON_DATA
 from text_templates import CREDENTIALS
+from text_templates import VERIFICATION_IN_PROGRESS_TEXT
 
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 APP_URL = os.environ['APP_URL']
-MANAGER_TELEGRAM_ID = os.environ['MANAGER_TELEGRAM_ID']
-
+HR_MANAGER_ID = os.environ['HR_MANAGER_ID']
+TECH_MANAGER_ID = os.environ['TECH_MANAGER_ID']
+HR_MANAGER_USERNAME = os.environ['HR_MANAGER_USERNAME']
 
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
@@ -55,8 +58,13 @@ def handle_accept(call):
         
         bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
     if str(call.data) == SUBMIT_TASK_BUTTON_DATA:
-        username = call.message.from_user.first_name
-        bot.send_message(MANAGER_TELEGRAM_ID, MANAGER_NOTIFICATION_TEXT.format(username=username))
+        manager_username = HR_MANAGER_USERNAME
+        username = call.message.to_user.first_name
+        number_of_credentials = 17
+        
+        bot.send_message(call.message.chat.id, VERIFICATION_IN_PROGRESS_TEXT.format(manager_username=manager_username))
+        bot.send_message(HR_MANAGER_ID, HR_MANAGER_NOTIFICATION_TEXT.format(username=username))
+        bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(username=username, number_of_credentials=number_of_credentials))
     bot.answer_callback_query(call.id)
 
 
