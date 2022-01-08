@@ -28,9 +28,9 @@ def start(message):
     instruction_link = task["Instruction_link"]
     
     markup = types.InlineKeyboardMarkup()
-    accept_task_btn = types.InlineKeyboardButton(ACCEPT_TASK_BUTTON_TEXT, url=instruction_link, callback_data=ACCEPT_TASK_BUTTON_DATA)
-    link_btn = types.InlineKeyboardButton(LINK_BUTTON_TEXT, callback_data=LINK_BUTTON_DATA)
-    
+    link_btn = types.InlineKeyboardButton(LINK_BUTTON_TEXT, url=instruction_link, callback_data=LINK_BUTTON_DATA)
+    accept_task_btn = types.InlineKeyboardButton(ACCEPT_TASK_BUTTON_TEXT, callback_data=ACCEPT_TASK_BUTTON_DATA)
+
     markup.row(link_btn)
     markup.row(accept_task_btn)
     
