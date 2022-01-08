@@ -21,7 +21,7 @@ logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Верифицировать аккаунт \(Level 2\)\n\nПодробнее смотрите в [<инструкции>](<{instruction_link}>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
+    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\n\- Верифицировать аккаунт\n\nПодробнее смотрите в [<инструкции\>](<{instruction_link}\>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
     text = task["Text"].format(instruction_link=task["Instruction_link"])
     
     markup = types.InlineKeyboardMarkup()
