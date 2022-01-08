@@ -21,7 +21,7 @@ logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\n\- Верифицировать аккаунт\n\nПодробнее смотрите в [<инструкции\>](<{instruction_link}\>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
+    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\- Верифицировать аккаунт\n\nПодробнее смотрите в [<инструкции\>](<{instruction_link}\>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
     text = task["Text"].format(instruction_link=task["Instruction_link"])
     
     markup = types.InlineKeyboardMarkup()
@@ -37,7 +37,7 @@ def handle_accept(call):
     if str(call.data) == ACCEPT_TASK_BUTTON_DATA:
         login = "petrovich@gmail.com"
         password = "12345678"
-        bot.send_message(call.message.chat.id, CREDENTIALS.format(login, password))
+        bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password))
     bot.answer_callback_query(call.id)
 
 
