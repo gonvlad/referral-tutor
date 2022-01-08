@@ -21,15 +21,15 @@ logger.setLevel(logging.DEBUG)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    task = {"Title" : "OKCOIN", "Caption" : "Краткое описание задания:\n- Верифицировать аккаунт (Level 2)\n\nПодробнее смотрите в [<инструкции>](<{instruction_link}>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
-    caption = task["Caption"].format(instruction_link=task["Instruction_link"])
+    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n- Верифицировать аккаунт (Level 2)\n\nПодробнее смотрите в [<инструкции>](<{instruction_link}>) ⬅️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
+    text = task["Text"].format(instruction_link=task["Instruction_link"])
     
     markup = types.InlineKeyboardMarkup()
     accept_task_btn = types.InlineKeyboardButton(ACCEPT_TASK_BUTTON_TEXT, callback_data=ACCEPT_TASK_BUTTON_DATA)
     markup.row(accept_task_btn)
     
     bot.send_message(message.chat.id, START_TEXT)
-    bot.send_message(message.chat.id, caption=caption, reply_markup=markup, parse_mode='MarkdownV2')
+    bot.send_message(message.chat.id, text, reply_markup=markup, parse_mode='MarkdownV2')
     
 
 @bot.callback_query_handler(func=lambda call: True)
