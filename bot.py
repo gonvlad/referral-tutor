@@ -2,13 +2,15 @@ import os
 import telebot
 from telebot import types
 import logging
-from config import BOT_TOKEN
-from config import APP_URL
 from flask import Flask, request
 from text_templates import START_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_TEXT
 from text_templates import ACCEPT_TASK_BUTTON_DATA
 from text_templates import CREDENTIALS
+
+
+BOT_TOKEN = os.environ['BOT_TOKEN']
+APP_URL = os.environ['APP_URL']
 
 
 bot = telebot.TeleBot(BOT_TOKEN)
