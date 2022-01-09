@@ -49,7 +49,7 @@ def start(message):
 def handle_accept(call):
     if str(call.data) == ACCEPT_TASK_BUTTON_DATA:
         login = "reforstir2152@protonmail.com "
-        password = "Qmtpfhtr*346"
+        password = "Pfcntrht32Prbcn"
         
         markup = types.InlineKeyboardMarkup()
         submit_task_btn = types.InlineKeyboardButton(SUBMIT_TASK_BUTTON_TEXT, callback_data=SUBMIT_TASK_BUTTON_DATA)
