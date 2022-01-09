@@ -48,8 +48,8 @@ def start(message):
 @bot.callback_query_handler(func=lambda call: True)
 def handle_accept(call):
     if str(call.data) == ACCEPT_TASK_BUTTON_DATA:
-        login = "petrovich@gmail.com"
-        password = "12345678"
+        login = "reforstir2152@protonmail.com "
+        password = "Qmtpfhtr*346"
         
         markup = types.InlineKeyboardMarkup()
         submit_task_btn = types.InlineKeyboardButton(SUBMIT_TASK_BUTTON_TEXT, callback_data=SUBMIT_TASK_BUTTON_DATA)
