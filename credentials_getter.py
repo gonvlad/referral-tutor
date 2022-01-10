@@ -22,9 +22,10 @@ class CredentialsGetter:
             
             if result:
                 print(">" * 100)
-                id = result[0]["id"]
-                login = result[0]["email"]
-                password = result[0]["pswd"]
+                for row in result:
+                    id = row["id"]
+                    login = row["email"]
+                    password = row["pswd"]
                 credentials = (id, login, password)
             else:
                 credentials = ()  
