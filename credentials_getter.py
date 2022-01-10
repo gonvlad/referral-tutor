@@ -8,7 +8,7 @@ DB_URI = os.environ['DB_URI']
 class CredentialsGetter:
     def __init__(self):
         self.connection = psycopg2.connect(DB_URI, sslmode="require")
-        self.cursor = connection.cursor()
+        self.cursor = self.connection.cursor()
         
     def __del__(self):
         self.cursor.close()
