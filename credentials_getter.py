@@ -34,6 +34,6 @@ class CredentialsGetter:
         return credentials
     
     def update_credentials(self, id):
-        self.cursor.execute("UPDATE okcoin_account SET status_id = 3 WHERE id = " + id)
+        self.cursor.execute("UPDATE okcoin_account SET status_id = 3 WHERE id = " + str(id))
         return self.connection.commit()
         
