@@ -73,7 +73,7 @@ def handle_accept(call):
                 bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
         else:
             number_of_credentials = 0
-            bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(username=username, number_of_credentials=number_of_credentials))
+            bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(number_of_credentials=number_of_credentials))
     if str(call.data) == SUBMIT_TASK_BUTTON_DATA:
         manager_username = HR_MANAGER_USERNAME
         username = call.message.chat.username
