@@ -68,9 +68,8 @@ def handle_accept(call):
             markup.row(submit_task_btn)
             
             id = credentials[0]
-            result = credentials_getter.update_credentials(id=id)      
-            if result:
-                bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
+            credentials_getter.update_credentials(id=id)      
+            bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
         else:
             number_of_credentials = 0
             bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(number_of_credentials=number_of_credentials))
