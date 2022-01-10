@@ -21,9 +21,10 @@ class CredentialsGetter:
             result = self.cursor.fetchone()
             
             if result:
-                id = row["id"]
-                login = row["email"]
-                password = row["pswd"]
+                print(">" * 100)
+                id = result[0]["id"]
+                login = result[0]["email"]
+                password = result[0]["pswd"]
                 credentials = (id, login, password)
             else:
                 credentials = ()  
