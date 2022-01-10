@@ -14,6 +14,7 @@ from text_templates import SUBMIT_TASK_BUTTON_TEXT
 from text_templates import SUBMIT_TASK_BUTTON_DATA
 from text_templates import CREDENTIALS
 from text_templates import VERIFICATION_IN_PROGRESS_TEXT
+from credentials_getter import CredentialsGetter
 
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
@@ -26,11 +27,17 @@ bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
+credentials_getter = CredentialsGetter()
+
+task = {
+    "Title" : "OKCOIN", 
+    "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\- Верифицировать аккаунт\n\nПодробнее смотрите в инструкции ⬇️", 
+    "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08", 
+}
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    task = {"Title" : "OKCOIN", "Text" : "Краткое описание задания:\n\- Заполнить базовую анкету\n\- Верифицировать аккаунт\n\nПодробнее смотрите в инструкции ⬇️", "Instruction_link" : "https://telegra.ph/Instrukciya-verifikaciya-Okcoin-01-08" }
     text = task["Text"]
     instruction_link = task["Instruction_link"]
     
@@ -47,24 +54,33 @@ def start(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle_accept(call):
-    if str(call.data) == ACCEPT_TASK_BUTTON_DATA:
-        login = "reforstir2152@protonmail.com "
-        password = "Pfcntrht32Prbcn"
+    if str(call.data) == ACCEPT_TASK_BUTTON_DATA:        
         
-        markup = types.InlineKeyboardMarkup()
-        submit_task_btn = types.InlineKeyboardButton(SUBMIT_TASK_BUTTON_TEXT, callback_data=SUBMIT_TASK_BUTTON_DATA)
+        credentials = credentials_getter.get_credentials()
+        
+        if credentials:
+            login = credentials[1]
+            password = credentials[2]
+        
+            markup = types.InlineKeyboardMarkup()
+            submit_task_btn = types.InlineKeyboardButton(SUBMIT_TASK_BUTTON_TEXT, callback_data=SUBMIT_TASK_BUTTON_DATA)
 
-        markup.row(submit_task_btn)
-        
-        bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
+            markup.row(submit_task_btn)
+            
+            id = credentials[0]
+            result = credentials_getter.update_credentials(id=id)      
+            if result:
+                bot.send_message(call.message.chat.id, CREDENTIALS.format(login=login, password=password), reply_markup=markup)
+        else:
+            number_of_credentials = 0
+            bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(username=username, number_of_credentials=number_of_credentials))
     if str(call.data) == SUBMIT_TASK_BUTTON_DATA:
         manager_username = HR_MANAGER_USERNAME
         username = call.message.chat.username
-        number_of_credentials = 17
         
         bot.send_message(call.message.chat.id, VERIFICATION_IN_PROGRESS_TEXT.format(manager_username=manager_username))
         bot.send_message(HR_MANAGER_ID, HR_MANAGER_NOTIFICATION_TEXT.format(username=username))
-        bot.send_message(TECH_MANAGER_ID, TECH_MANAGER_NOTIFICATION_TEXT.format(username=username, number_of_credentials=number_of_credentials))
+        bot.send_message(TECH_MANAGER_ID, HR_MANAGER_NOTIFICATION_TEXT.format(username=username))
     bot.answer_callback_query(call.id)
 
 
