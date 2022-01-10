@@ -22,6 +22,7 @@ class CredentialsGetter:
             
             if result:
                 print(">" * 100)
+                print(result)
                 for row in result:
                     id = row["id"]
                     login = row["email"]
